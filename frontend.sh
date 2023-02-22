@@ -11,6 +11,8 @@ echo -e "\e[35mExtracting frontend\e[0m"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip
 
 echo -e "\e[35mCopying nginx configs\e[0m"
+pwd
+ls -l
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 
