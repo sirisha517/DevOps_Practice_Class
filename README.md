@@ -1,2 +1,0 @@
-# DevOps_Practice_Class
-DevOps_Practice_Class
