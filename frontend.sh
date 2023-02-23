@@ -8,9 +8,6 @@ print_head() {
 print_head "Installing Nginx"
 yum install nginx -y &>>${log_file}
 
-systemctl enable nginx
-systemctl start nginx
-
 print_head "Removing  old content"
 rm -rf /usr/share/nginx/html/* &>>${log_file}
 
