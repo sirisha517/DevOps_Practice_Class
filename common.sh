@@ -11,5 +11,6 @@ status_check(){
     echo SUCESS
     else
       echo FAILURE
+      exit
   fi
 }
