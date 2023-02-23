@@ -1,4 +1,4 @@
-common.sh
+source common.sh
 
 print_head "configure nodejs repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
