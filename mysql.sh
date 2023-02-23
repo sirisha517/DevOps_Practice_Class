@@ -1,5 +1,6 @@
 source common.sh
 
+mysql_root_password=$1
 if [ -z "${1}" ] ; then # check variabe is empty
   echo -e "\e[35mMissing mysql Root Password\e[0"
   exit 1
