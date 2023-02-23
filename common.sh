@@ -43,12 +43,12 @@ NODEJS(){
   status_check $?
 
   print_head "download app content"
-  curl -L -o /tmp/{component}.zip https://roboshop-artifacts.s3.amazonaws.com/{component}.zip &>>${log_file}
+  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
   status_check $?
   cd /app
 
   print_head "extracting app content"
-  unzip /tmp/{component}.zip &>>${log_file}
+  unzip /tmp/${component}.zip &>>${log_file}
   status_check $?
 
   print_head "Installing nodejs dependencies"
@@ -56,19 +56,19 @@ NODEJS(){
   status_check $?
 
   print_head "copy systemd service file"
-  cp ${code_dir}/configs/{component}.service /etc/systemd/system/{component}.service &>>${log_file}
+  cp ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
   status_check $?
 
   print_head "Reload systemd"
   systemctl daemon-reload &>>${log_file}
   status_check $?
 
-  print_head "enable {component} service"
-  systemctl enable {component} &>>${log_file}
+  print_head "enable ${component} service"
+  systemctl enable ${component} &>>${log_file}
   status_check $?
 
-  print_head "start {component} service"
-  systemctl start {component} &>>${log_file}
+  print_head "start ${component} service"
+  systemctl start ${component} &>>${log_file}
   status_check $?
 
   print_head "copy mongodb repo file"
@@ -80,6 +80,6 @@ NODEJS(){
   status_check $?
 
   print_head "load schema"
-  mongo --host mongodb.devops517test.online </app/schema/{component}.js &>>${log_file}
+  mongo --host mongodb.devops517test.online </app/schema/${component}.js &>>${log_file}
   status_check $?
 }
