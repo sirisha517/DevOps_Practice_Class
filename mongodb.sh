@@ -1,8 +1,13 @@
-cp configs/mongodb.repo /etc/yum.repos.d/mongo.repo
-yum install mongodb-org -y
-systemctl enable mongod
-systemctl start mongod
+source common.sh
 
-cp  configs/mongodb.repo /etc/yum.repos.d/mongo.repo
-yum install mongodb-org-shell -y
-mongo --host mongodb.devops517test.online </app/schema/catalogue.js
+  print_head "setup Mongodb repository"
+cp configs/mongodb.repo /etc/yum.repos.d/mongo.repo
+
+  print_head "Installing Mongodb"
+yum install mongodb-org -y
+
+  print_head "enable Mongodb"
+systemctl enable mongod
+
+  print_head "start Momgodb"
+systemctl start mongod
