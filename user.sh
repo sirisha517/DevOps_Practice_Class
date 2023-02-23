@@ -41,6 +41,10 @@ print_head "Installing nodejs dependencies"
 npm install &>>${log_file}
 status_check $?
 
+print_head "copy systemd service file"
+cp ${code_dir}/configs/user.service /etc/systemd/system/user.service &>>${log_file}
+status_check $?
+
 print_head "Load the service."
 systemctl daemon-reload &>>${log_file}
 status_check $?
@@ -50,7 +54,7 @@ systemctl enable user &>>${log_file}
 status_check $?
 
 print_head "start redis"
-systemctl start user &>>${log_file}
+systemctl restart user &>>${log_file}
 status_check $?
 
 print_head "copy mongodb repo file"
