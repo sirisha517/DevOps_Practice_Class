@@ -21,8 +21,7 @@ systemd_setup(){
       cp ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
       status_check $?
 
-      sed -i -e "\sROBO_SHOP_USER_PASSWORD/${roboshop_app_password}/" /etc/systemd/system/payment.service &>>${log_file}
-      status_check $?
+      sed -i -e "s/ROBO_SHOP_USER_PASSWORD/${roboshop_app_password}/" /etc/systemd/system/payment.service &>>${log_file}
 
 
       print_head "Reload systemd"
