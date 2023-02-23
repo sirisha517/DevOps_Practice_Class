@@ -5,26 +5,26 @@ if [ -z "${1}" ] ; then # check variabe is empty
   exit 1
 fi
 print_head "disable mysql 8 version"
-dnf module disable mysql -y
+dnf module disable mysql -y &>>${log_file}
 status_check $?
 
 
 print_head "install mysql server"
-yum install mysql-community-server -y
+yum install mysql-community-server -y &>>${log_file}
 status_check $?
 
 print_head "enable  mysql server"
-systemctl enable mysqld
+systemctl enable mysqld &>>${log_file}
 status_check $?
 
 print_head "start mysql server"
-systemctl start mysqld
+systemctl start mysqld &>>${log_file}
 status_check $?
 
 print_head "set root password"
-mysql_secure_installation --set-root-pass ${mysql_root_password}
+mysql_secure_installation --set-root-pass ${mysql_root_password} &>>${log_file}
 status_check $?
 
 print_head "disable mysql"
-mysql -uroot -pRoboShop@1
+mysql -uroot -pRoboShop@1 &>>${log_file}
 status_check $?
