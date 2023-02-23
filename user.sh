@@ -61,8 +61,8 @@ print_head "copy mongodb repo file"
 cp  ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
 status_check $?
 
-print_head "install redis"
-yum install redis-org-shell -y &>>${log_file}
+print_head "install mongodb"
+yum install mongodb-org-shell -y &>>${log_file}
 status_check $?
 
 print_head "Load Schema"
