@@ -16,6 +16,6 @@ status_check $?
 systemctl enable mongod &>>${log_file}
 status_check $?
 
-  print_head "start Momgodb"
+  print_head "start Mongodb"
 systemctl start mongod &>>${log_file}
 status_check $?
