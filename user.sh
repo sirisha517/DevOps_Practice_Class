@@ -21,6 +21,11 @@ if [ ! -d /app ] ; then # if not exists then create directory
   fi
 status_check $?
 
+
+print_head "remove old content"
+rm -rf /app/* &>>${log_file}
+status_check $?
+
 print_head "download app content"
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>>${log_file}
 cd /app
@@ -40,7 +45,7 @@ print_head "Load the service."
 systemctl daemon-reload &>>${log_file}
 status_check $?
 
-print_head "enable redis"
+print_head "enable redis user"
 systemctl enable user &>>${log_file}
 status_check $?
 
@@ -48,10 +53,14 @@ print_head "start redis"
 systemctl start user &>>${log_file}
 status_check $?
 
+print_head "copy mongodb repo file"
+cp  ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+status_check $?
+
 print_head "install redis"
 yum install redis-org-shell -y &>>${log_file}
 status_check $?
 
 print_head "Load Schema"
-mongo --host redis.devops517test.online </app/schema/user.js &>>${log_file}
+mongo --host mongodb.devops517test.online </app/schema/user.js &>>${log_file}
 status_check $?
