@@ -21,6 +21,10 @@ systemd_setup(){
       cp ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
       status_check $?
 
+      sed -i -e "\sROBO_SHOP_USER_PASSWORD/${roboshop_app_password}/" /etc/systemd/system/payment.service &>>${log_file}
+      status_check $?
+
+
       print_head "Reload systemd"
       systemctl daemon-reload &>>${log_file}
       status_check $?
@@ -148,6 +152,19 @@ java(){
 
 # systemd function
  systemd_setup
+}
 
+python(){
+   print_head "install python dependencies "
+   yum install python36 gcc python3-devel -y &>>${log_file}
+   status_check $?
 
+   app_prereq_setup
+
+   print_head "download dependencies"
+   pip3.6 install -r requirements.txt &>>${log_file}
+   status_check $?
+
+    # systemd function
+   systemd_setup
 }
