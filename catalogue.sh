@@ -16,7 +16,9 @@ if [ $? -ne 0 ]; then
 status_check $?
 
 print_head "create application directory"
-mkdir /app &>>${log_file}
+if [ ! -d /app ] ; then
+  mkdir /app &>>${log_file}
+  fi
 status_check $?
 
 print_head "remove old content"
