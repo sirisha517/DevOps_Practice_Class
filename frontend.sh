@@ -5,6 +5,15 @@ print_head "Installing Nginx"
 yum install nginx -y &>>${log_file}
 status_check $?
 
+print_head "enable Nginx"
+systemctl enable nginx
+status_check $?
+
+print_head "start Nginx"
+systemctl start nginx
+status_check $?
+
+
 print_head "Removing  old content"
 rm -rf /usr/share/nginx/html/* &>>${log_file}
 status_check $?
@@ -23,9 +32,6 @@ print_head "Copying Nginx configs for RoboShop"
 cp ${code_dir}/configs/nginx.conf /etc/nginx/default.d/roboshop.conf &>>${log_file}
 status_check $?
 
-print_head "enable Nginx"
-systemctl enable nginx &>>${log_file}
-status_check $?
 
 print_head "start Nginx"
 systemctl restart nginx &>>${log_file}
