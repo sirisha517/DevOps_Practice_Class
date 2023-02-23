@@ -1,6 +1,6 @@
 source common.sh
 
-print_head "congigure nodejs repo"
+print_head "configure nodejs repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
 
 print_head "Install nodejs repo"
