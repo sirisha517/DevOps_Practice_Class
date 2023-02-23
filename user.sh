@@ -21,7 +21,6 @@ if [ ! -d /app ] ; then # if not exists then create directory
   fi
 status_check $?
 
-
 print_head "remove old content"
 rm -rf /app/* &>>${log_file}
 status_check $?
@@ -35,8 +34,6 @@ print_head "extracting app content"
 unzip /tmp/user.zip &>>${log_file}
 status_check $?
 
-
-cd /app
 print_head "Installing nodejs dependencies"
 npm install &>>${log_file}
 status_check $?
@@ -45,26 +42,27 @@ print_head "copy systemd service file"
 cp ${code_dir}/configs/user.service /etc/systemd/system/user.service &>>${log_file}
 status_check $?
 
-print_head "Load the service."
+print_head "Reload systemd"
 systemctl daemon-reload &>>${log_file}
 status_check $?
 
-print_head "enable redis user"
+print_head "enable user service"
 systemctl enable user &>>${log_file}
 status_check $?
 
-print_head "start redis"
-systemctl restart user &>>${log_file}
+print_head "start user service"
+systemctl start user &>>${log_file}
 status_check $?
 
 print_head "copy mongodb repo file"
 cp  ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
 status_check $?
 
-print_head "install mongodb"
+print_head "Install mongo client"
 yum install mongodb-org-shell -y &>>${log_file}
 status_check $?
 
-print_head "Load Schema"
+print_head "load schema"
 mongo --host mongodb.devops517test.online </app/schema/user.js &>>${log_file}
 status_check $?
+
