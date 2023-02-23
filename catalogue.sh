@@ -10,13 +10,13 @@ status_check $?
 
 print_head "roboshop user added"
 id roboshop &>>${log_file}
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]; then # user doesnot exists then create
   useradd roboshop &>>${log_file}
   fi
 status_check $?
 
 print_head "create application directory"
-if [ ! -d /app ] ; then
+if [ ! -d /app ] ; then # if not exists then create directory
   mkdir /app &>>${log_file}
   fi
 status_check $?
