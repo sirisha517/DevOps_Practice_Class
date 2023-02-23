@@ -15,8 +15,23 @@ status_check(){
       exit 1
   fi
 }
+ schema_setup(){
+   if [ "${schema_type}" == "mongo" ] ; then
+     print_head "copy mongodb repo file"
+      cp  ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+      status_check $?
 
-NODEJS(){
+      print_head "Install mongo client"
+      yum install mongodb-org-shell -y &>>${log_file}
+      status_check $?
+
+      print_head "load schema"
+      mongo --host mongodb.devops517test.online </app/schema/${component}.js &>>${log_file}
+      status_check $?
+  fi
+  }
+
+nodejs(){
   print_head "configure nodejs repo"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
   status_check $?
@@ -71,15 +86,7 @@ NODEJS(){
   systemctl start ${component} &>>${log_file}
   status_check $?
 
-  print_head "copy mongodb repo file"
-  cp  ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
-  status_check $?
+  schema_setup
 
-  print_head "Install mongo client"
-  yum install mongodb-org-shell -y &>>${log_file}
-  status_check $?
 
-  print_head "load schema"
-  mongo --host mongodb.devops517test.online </app/schema/${component}.js &>>${log_file}
-  status_check $?
 }
